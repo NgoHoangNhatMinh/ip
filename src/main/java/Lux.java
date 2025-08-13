@@ -1,9 +1,24 @@
+import java.util.Scanner;
+
 public class Lux {
     public static void main(String[] args) {
-        String logo = "Hello! I'm LUX\n"
+        String greeting = "-------------------------------\n"
+                + "Hello! I'm LUX\n"
                 + "What can I do for you?\n"
-                + "-------------------------------\n"
-                + "Bye. Hope to see you again soon!\n";
-        System.out.println(logo);
+                + "-------------------------------\n";
+        System.out.println(greeting);
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String command = scanner.nextLine();
+            System.out.println("-------------------------------");
+            if (command.equals("bye")) {
+                System.out.println("Bye. Hope to see you again soon!\n");
+                scanner.close();
+                return;
+            }
+            System.out.println(command);
+            System.out.println("-------------------------------");
+        }
     }
 }
