@@ -13,14 +13,14 @@ public class Task {
 
     public void mark() {
         isDone = true;
-        System.out.println("OK, I've marked this task as done:");
-        System.out.println("[X] " + description);
+        System.out.println("LUX: Great! I've marked this task as done:");
+        System.out.println("    " + this);
     }
 
     public void unmark() {
         isDone = false;
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("[ ] " + description);
+        System.out.println("LUX: I've marked this task as not done yet:");
+        System.out.println("    " + this);
     }
 
     @Override
