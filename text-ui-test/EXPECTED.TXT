@@ -1,7 +1,57 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+Hello! I'm LUX
+What can I do for you?
+-------------------------------
 
+* added: hello
+------------------------------
+
+* added: test
+------------------------------
+
+* Got it. I've added this task: 
+[D][ ] homework(by: tonight)
+------------------------------
+
+0. [ ] hello
+1. [ ] test
+2. [D][ ] homework(by: tonight)
+------------------------------
+
+OK, I've marked this task as done:
+[X] homework
+------------------------------
+
+OK, I've marked this task as done:
+[X] test
+------------------------------
+
+OK, I've marked this task as not done yet:
+[ ] test
+------------------------------
+
+* Got it. I've added this task: 
+[E][ ] class (from: 2pm to: 4pm)
+------------------------------
+
+OK, I've marked this task as done:
+[X] class
+------------------------------
+
+0. [ ] hello
+1. [ ] test
+2. [D][X] homework(by: tonight)
+3. [E][X] class (from: 2pm to: 4pm)
+------------------------------
+
+* Got it. I've added this task: 
+[T][ ] sleep
+------------------------------
+
+0. [ ] hello
+1. [ ] test
+2. [D][X] homework(by: tonight)
+3. [E][X] class (from: 2pm to: 4pm)
+4. [T][ ] sleep
+------------------------------
+
+Bye. Hope to see you again soon!
