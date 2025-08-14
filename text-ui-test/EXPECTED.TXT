@@ -1,57 +1,49 @@
-Hello! I'm LUX
-What can I do for you?
--------------------------------
-
-* added: hello
-------------------------------
-
-* added: test
-------------------------------
-
-* Got it. I've added this task: 
-[D][ ] homework(by: tonight)
-------------------------------
-
-0. [ ] hello
-1. [ ] test
-2. [D][ ] homework(by: tonight)
-------------------------------
-
-OK, I've marked this task as done:
-[X] homework
-------------------------------
-
-OK, I've marked this task as done:
-[X] test
-------------------------------
-
-OK, I've marked this task as not done yet:
-[ ] test
-------------------------------
-
-* Got it. I've added this task: 
-[E][ ] class (from: 2pm to: 4pm)
-------------------------------
-
-OK, I've marked this task as done:
-[X] class
-------------------------------
-
-0. [ ] hello
-1. [ ] test
-2. [D][X] homework(by: tonight)
-3. [E][X] class (from: 2pm to: 4pm)
-------------------------------
-
-* Got it. I've added this task: 
-[T][ ] sleep
-------------------------------
-
-0. [ ] hello
-1. [ ] test
-2. [D][X] homework(by: tonight)
-3. [E][X] class (from: 2pm to: 4pm)
-4. [T][ ] sleep
-------------------------------
-
-Bye. Hope to see you again soon!
+========================================
+LUX: Hello! I'm LUX, your personal assistant chatbot.
+LUX: How can I assist you today?
+========================================
+You: LUX: Added a new task: hello
+========================================
+You: LUX: Added a new deadline task:
+    [D] [ ] project (by: tomorrow)
+========================================
+You: LUX: Here are your current tasks:
+  0. [ ] hello
+  1. [D] [ ] project (by: tomorrow)
+========================================
+You: LUX: Great! I've marked this task as done:
+    [D] [X] project (by: tomorrow)
+LUX: Task 1 marked as done.
+========================================
+You: LUX: I've marked this task as not done yet:
+    [D] [ ] project (by: tomorrow)
+LUX: Task 1 marked as not done.
+========================================
+You: LUX: Added a new event task:
+    [E] [ ] meeting (from: 10am to: 11am)
+========================================
+You: LUX: Added a new todo task:
+    [T] [ ] read book
+========================================
+You: LUX: Here are your current tasks:
+  0. [ ] hello
+  1. [D] [ ] project (by: tomorrow)
+  2. [E] [ ] meeting (from: 10am to: 11am)
+  3. [T] [ ] read book
+========================================
+You: LUX: Great! I've marked this task as done:
+    [E] [X] meeting (from: 10am to: 11am)
+LUX: Task 2 marked as done.
+========================================
+You: LUX: Great! I've marked this task as done:
+    [T] [X] read book
+LUX: Task 3 marked as done.
+========================================
+You: LUX: Here are your current tasks:
+  0. [ ] hello
+  1. [D] [ ] project (by: tomorrow)
+  2. [E] [X] meeting (from: 10am to: 11am)
+  3. [T] [X] read book
+========================================
+You: LUX: Goodbye! Hope to see you again soon!
+========================================
