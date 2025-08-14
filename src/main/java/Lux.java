@@ -20,6 +20,7 @@ public class Lux {
         keywords.add("mark");
         keywords.add("unmark");
         keywords.add("bye");
+        keywords.add("delete");
 
         final String divider = "========================================";
         System.out.println(divider);
@@ -107,6 +108,18 @@ public class Lux {
                         System.out.println("LUX: Added a new event task:\n    " + t);
                     } else {
                         System.err.println(new LuxException("Please specify both /from and /to for your event."));
+                    }
+                } else if (k.equals("delete")) {
+                    if (v.equals("")) {
+                        System.err.println(new LuxException("Please specify the task number you want to delete."));
+                        break;
+                    }
+                    int idx = Integer.parseInt(v);
+                    if (idx >= 0 && idx < tasks.size()) {
+                        tasks.remove(idx);
+                        System.out.println("LUX: Task " + idx + " deleted.");
+                    } else {
+                        System.out.println("LUX: Invalid task number.");
                     }
                 }
             }

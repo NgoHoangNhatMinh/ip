@@ -2,22 +2,15 @@
 LUX: Hello! I'm LUX, your personal assistant chatbot.
 LUX: How can I assist you today?
 ========================================
-You: LUX: Added a new task: hello
-========================================
 You: LUX: Added a new deadline task:
     [D] [ ] project (by: tomorrow)
 ========================================
 You: LUX: Here are your current tasks:
-  0. [ ] hello
-  1. [D] [ ] project (by: tomorrow)
+  0. [D] [ ] project (by: tomorrow)
 ========================================
-You: LUX: Great! I've marked this task as done:
-    [D] [X] project (by: tomorrow)
-LUX: Task 1 marked as done.
+You: LUX: Invalid task number.
 ========================================
-You: LUX: I've marked this task as not done yet:
-    [D] [ ] project (by: tomorrow)
-LUX: Task 1 marked as not done.
+You: LUX: Invalid task number.
 ========================================
 You: LUX: Added a new event task:
     [E] [ ] meeting (from: 10am to: 11am)
@@ -26,24 +19,26 @@ You: LUX: Added a new todo task:
     [T] [ ] read book
 ========================================
 You: LUX: Here are your current tasks:
-  0. [ ] hello
-  1. [D] [ ] project (by: tomorrow)
-  2. [E] [ ] meeting (from: 10am to: 11am)
-  3. [T] [ ] read book
-========================================
-You: LUX: Great! I've marked this task as done:
-    [E] [X] meeting (from: 10am to: 11am)
-LUX: Task 2 marked as done.
+  0. [D] [ ] project (by: tomorrow)
+  1. [E] [ ] meeting (from: 10am to: 11am)
+  2. [T] [ ] read book
 ========================================
 You: LUX: Great! I've marked this task as done:
     [T] [X] read book
-LUX: Task 3 marked as done.
+LUX: Task 2 marked as done.
+========================================
+You: LUX: Invalid task number.
 ========================================
 You: LUX: Here are your current tasks:
-  0. [ ] hello
-  1. [D] [ ] project (by: tomorrow)
-  2. [E] [X] meeting (from: 10am to: 11am)
-  3. [T] [X] read book
+  0. [D] [ ] project (by: tomorrow)
+  1. [E] [ ] meeting (from: 10am to: 11am)
+  2. [T] [X] read book
+========================================
+You: LUX: Task 2 deleted.
+========================================
+You: LUX: Here are your current tasks:
+  0. [D] [ ] project (by: tomorrow)
+  1. [E] [ ] meeting (from: 10am to: 11am)
 ========================================
 You: LUX: Goodbye! Hope to see you again soon!
 ========================================
