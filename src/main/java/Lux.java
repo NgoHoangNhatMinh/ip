@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public class Lux {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws LuxException {
         List<Task> tasks = new ArrayList<>();
         Set<String> keywords = new HashSet<>();
         keywords.add("list");
@@ -29,11 +29,17 @@ public class Lux {
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.print("You: ");
-            String userInput = scanner.nextLine();
-            Map<String, String> parsedCommand = parseCommand(userInput, keywords);
+            Map<String, String> parsedCommand = null;
+            while (parsedCommand == null) {
+                try {
+                    System.out.print("You: ");
+                    String userInput = scanner.nextLine();
+                    parsedCommand = parseCommand(userInput, keywords);
+                } catch (LuxException e) {
+                    System.err.println(e);
+                }
+            }
 
-            boolean responded = false;
             for (Map.Entry<String, String> entry : parsedCommand.entrySet()) {
                 String k = entry.getKey(), v = entry.getValue();
                 if (k.equals("bye")) {
@@ -44,8 +50,12 @@ public class Lux {
                 } else if (k.equals("list")) {
                     System.out.println("LUX: Here are your current tasks:");
                     list(tasks);
-                    responded = true;
                 } else if (k.equals("mark")) {
+                    if (v.equals("")) {
+                        System.err
+                                .println(new LuxException("Please specify the task number you want to mark as done."));
+                        break;
+                    }
                     int idx = Integer.parseInt(v);
                     if (idx >= 0 && idx < tasks.size()) {
                         tasks.get(idx).mark();
@@ -53,8 +63,12 @@ public class Lux {
                     } else {
                         System.out.println("LUX: Invalid task number.");
                     }
-                    responded = true;
                 } else if (k.equals("unmark")) {
+                    if (v.equals("")) {
+                        System.err.println(
+                                new LuxException("Please specify the task number you want to mark as not done."));
+                        break;
+                    }
                     int idx = Integer.parseInt(v);
                     if (idx >= 0 && idx < tasks.size()) {
                         tasks.get(idx).unmark();
@@ -62,41 +76,46 @@ public class Lux {
                     } else {
                         System.out.println("LUX: Invalid task number.");
                     }
-                    responded = true;
-                } else if (k.equals("add")) {
-                    tasks.add(new Task(userInput));
-                    System.out.println("LUX: Added a new task: " + userInput);
-                    responded = true;
                 } else if (k.equals("todo")) {
+                    if (v.equals("")) {
+                        System.err.println(new LuxException("Please provide a description for your todo task."));
+                        break;
+                    }
                     TodoTask t = new TodoTask(v);
                     tasks.add(t);
                     System.out.println("LUX: Added a new todo task:\n    " + t);
-                    responded = true;
                 } else if (k.equals("deadline")) {
+                    if (v.equals("")) {
+                        System.err.println(new LuxException("Please provide a description for your deadline task."));
+                        break;
+                    }
                     if (parsedCommand.containsKey("/by")) {
                         DeadlineTask t = new DeadlineTask(v, parsedCommand.get("/by"));
                         tasks.add(t);
                         System.out.println("LUX: Added a new deadline task:\n    " + t);
-                        responded = true;
+                    } else {
+                        System.err.println(new LuxException("Please specify the deadline using /by."));
                     }
                 } else if (k.equals("event")) {
+                    if (v.equals("")) {
+                        System.err.println(new LuxException("Please provide a description for your event task."));
+                        break;
+                    }
                     if (parsedCommand.containsKey("/from") && parsedCommand.containsKey("/to")) {
                         EventTask t = new EventTask(v, parsedCommand.get("/from"), parsedCommand.get("/to"));
                         tasks.add(t);
                         System.out.println("LUX: Added a new event task:\n    " + t);
-                        responded = true;
+                    } else {
+                        System.err.println(new LuxException("Please specify both /from and /to for your event."));
                     }
                 }
-            }
-            if (!responded) {
-                System.out.println("LUX: Sorry, I didn't understand that. Please try again.");
             }
             System.out.println(divider);
         }
     }
 
     // Parse command into a map of {commands: arguments}
-    private static Map<String, String> parseCommand(String userInput, Set<String> keywords) {
+    private static Map<String, String> parseCommand(String userInput, Set<String> keywords) throws LuxException {
         Map<String, String> parsed = new LinkedHashMap<>();
         String[] tokens = userInput.split(" ");
 
@@ -118,7 +137,7 @@ public class Lux {
         if (key != null) {
             parsed.put(key, value.trim());
         } else {
-            parsed.put("add", value.trim());
+            throw new LuxException("Sorry, I didn't understand that command. Please try again!");
         }
 
         return parsed;
