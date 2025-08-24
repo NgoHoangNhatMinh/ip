@@ -6,15 +6,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class Lux {
     public static void main(String[] args) throws LuxException {
         String filePath = "data/tasks";
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HHmm");
 
         List<Task> tasks = new ArrayList<>();
         try {
@@ -112,9 +116,16 @@ public class Lux {
                         break;
                     }
                     if (parsedCommand.containsKey("/by")) {
-                        DeadlineTask t = new DeadlineTask(v, parsedCommand.get("/by"));
-                        tasks.add(t);
-                        System.out.println("LUX: Added a new deadline task:\n    " + t);
+                        try {
+                            LocalDateTime time = LocalDateTime.parse(parsedCommand.get("/by"), timeFormatter);
+                            DeadlineTask t = new DeadlineTask(v, time);
+                            tasks.add(t);
+                            System.out.println("LUX: Added a new deadline task:\n    " + t);
+                        } catch (DateTimeParseException e) {
+                            System.err.println(
+                                    "Error: Invalid date/time format. Please follow this format: " + timeFormatter);
+                        }
+
                     } else {
                         System.err.println(new LuxException("Please specify the deadline using /by."));
                     }
@@ -124,9 +135,16 @@ public class Lux {
                         break;
                     }
                     if (parsedCommand.containsKey("/from") && parsedCommand.containsKey("/to")) {
-                        EventTask t = new EventTask(v, parsedCommand.get("/from"), parsedCommand.get("/to"));
-                        tasks.add(t);
-                        System.out.println("LUX: Added a new event task:\n    " + t);
+                        try {
+                            LocalDateTime fromTime = LocalDateTime.parse(parsedCommand.get("/from"), timeFormatter);
+                            LocalDateTime toTime = LocalDateTime.parse(parsedCommand.get("/to"), timeFormatter);
+                            EventTask t = new EventTask(v, fromTime, toTime);
+                            tasks.add(t);
+                            System.out.println("LUX: Added a new event task:\n    " + t);
+                        } catch (DateTimeParseException e) {
+                            System.err.println(
+                                    "Error: Invalid date/time format. Please follow this format: " + timeFormatter);
+                        }
                     } else {
                         System.err.println(new LuxException("Please specify both /from and /to for your event."));
                     }
@@ -188,37 +206,34 @@ public class Lux {
         }
     }
 
+    // TODO: change to human readable format
     private static void serializeTasks(List<Task> tasks, String filePath) throws IOException {
-        filePath += ".json";
+        filePath += ".ser";
         File f = new File(filePath);
         f.getParentFile().mkdirs();
 
-        Gson gson = new Gson();
-        String json = gson.toJson(tasks);
-        try (FileOutputStream fos = new FileOutputStream(filePath)) {
-            fos.write(json.getBytes());
+        try (FileOutputStream fileOut = new FileOutputStream(filePath);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(tasks);
+        } catch (IOException i) {
+            i.printStackTrace();
         }
     }
 
     private static ArrayList<Task> deserializeTasks(String filePath) throws IOException {
-        filePath += ".json";
+        filePath += ".ser";
         File f = new File(filePath);
         if (!f.exists()) {
             return new ArrayList<>();
         }
 
-        Gson gson = new Gson();
-        StringBuilder sb = new StringBuilder();
-        try (FileInputStream fis = new FileInputStream(filePath)) {
-            int c;
-            while ((c = fis.read()) != -1) {
-                sb.append((char) c);
-            }
+        try (FileInputStream fileIn = new FileInputStream(filePath);
+                ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            @SuppressWarnings("unchecked")
+            ArrayList<Task> loadedTasks = (ArrayList<Task>) in.readObject();
+            return loadedTasks;
+        } catch (IOException | ClassNotFoundException c) {
+            return new ArrayList<>();
         }
-
-        TypeToken<ArrayList<Task>> taskListType = new TypeToken<ArrayList<Task>>() {
-        };
-        ArrayList<Task> loadedTasks = gson.fromJson(sb.toString(), taskListType);
-        return loadedTasks == null ? new ArrayList<Task>() : loadedTasks;
     }
 }
