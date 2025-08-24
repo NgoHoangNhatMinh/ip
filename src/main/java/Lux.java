@@ -6,15 +6,38 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import com.google.gson.typeadapters.*;
+
+class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
+    @Override
+    public void write(JsonWriter out, LocalDateTime value) throws IOException {
+        out.value(value.format(formatter));
+    }
+
+    @Override
+    public LocalDateTime read(JsonReader in) throws IOException {
+        return LocalDateTime.parse(in.nextString(), formatter);
+    }
+}
 
 public class Lux {
     public static void main(String[] args) throws LuxException {
         String filePath = "data/tasks";
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HHmm");
 
         List<Task> tasks = new ArrayList<>();
         try {
@@ -112,9 +135,16 @@ public class Lux {
                         break;
                     }
                     if (parsedCommand.containsKey("/by")) {
-                        DeadlineTask t = new DeadlineTask(v, parsedCommand.get("/by"));
-                        tasks.add(t);
-                        System.out.println("LUX: Added a new deadline task:\n    " + t);
+                        try {
+                            LocalDateTime time = LocalDateTime.parse(parsedCommand.get("/by"), timeFormatter);
+                            DeadlineTask t = new DeadlineTask(v, time);
+                            tasks.add(t);
+                            System.out.println("LUX: Added a new deadline task:\n    " + t);
+                        } catch (DateTimeParseException e) {
+                            System.err.println(
+                                    "Error: Invalid date/time format. Please follow this format: " + timeFormatter);
+                        }
+
                     } else {
                         System.err.println(new LuxException("Please specify the deadline using /by."));
                     }
@@ -124,9 +154,16 @@ public class Lux {
                         break;
                     }
                     if (parsedCommand.containsKey("/from") && parsedCommand.containsKey("/to")) {
-                        EventTask t = new EventTask(v, parsedCommand.get("/from"), parsedCommand.get("/to"));
-                        tasks.add(t);
-                        System.out.println("LUX: Added a new event task:\n    " + t);
+                        try {
+                            LocalDateTime fromTime = LocalDateTime.parse(parsedCommand.get("/from"), timeFormatter);
+                            LocalDateTime toTime = LocalDateTime.parse(parsedCommand.get("/to"), timeFormatter);
+                            EventTask t = new EventTask(v, fromTime, toTime);
+                            tasks.add(t);
+                            System.out.println("LUX: Added a new event task:\n    " + t);
+                        } catch (DateTimeParseException e) {
+                            System.err.println(
+                                    "Error: Invalid date/time format. Please follow this format: " + timeFormatter);
+                        }
                     } else {
                         System.err.println(new LuxException("Please specify both /from and /to for your event."));
                     }
@@ -188,12 +225,15 @@ public class Lux {
         }
     }
 
+    // FIXME: current gson serialization does not support type/subtype
     private static void serializeTasks(List<Task> tasks, String filePath) throws IOException {
         filePath += ".json";
         File f = new File(filePath);
         f.getParentFile().mkdirs();
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
         String json = gson.toJson(tasks);
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write(json.getBytes());
@@ -207,7 +247,9 @@ public class Lux {
             return new ArrayList<>();
         }
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
         StringBuilder sb = new StringBuilder();
         try (FileInputStream fis = new FileInputStream(filePath)) {
             int c;
@@ -218,7 +260,7 @@ public class Lux {
 
         TypeToken<ArrayList<Task>> taskListType = new TypeToken<ArrayList<Task>>() {
         };
-        ArrayList<Task> loadedTasks = gson.fromJson(sb.toString(), taskListType);
+        ArrayList<Task> loadedTasks = gson.fromJson(sb.toString(), taskListType.getType());
         return loadedTasks == null ? new ArrayList<Task>() : loadedTasks;
     }
 }

@@ -1,7 +1,10 @@
-public class EventTask extends Task {
-    protected String startTime, endTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public EventTask(String description, String startTime, String endTime) {
+public class EventTask extends Task {
+    protected LocalDateTime startTime, endTime;
+
+    public EventTask(String description, LocalDateTime startTime, LocalDateTime endTime) {
         super(description);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -9,6 +12,8 @@ public class EventTask extends Task {
 
     @Override
     public String toString() {
-        return "[E] " + super.toString() + " (from: " + startTime + " to: " + endTime + ")";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+        return "[E] " + super.toString() + " (from: " + startTime.format(formatter) + " to: "
+                + endTime.format(formatter) + ")";
     }
 }
