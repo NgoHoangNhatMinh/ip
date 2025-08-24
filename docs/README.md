@@ -1,29 +1,97 @@
 # Lux User Guide
 
-// Update the title above to match the actual product name
+Lux is your personal assistant chatbot for managing tasks from the command line.
 
-// Product screenshot goes here
+## Features
 
-// Product intro goes here
+- Add todo, deadline, and event tasks
+- List all tasks
+- Mark/unmark tasks as done
+- Delete tasks
+- Save and load tasks automatically
 
-## Adding deadlines
+## Usage
 
-// Describe the action and its outcome.
+### Compiling, Running, and Testing
 
-// Give examples of usage
+You can use the following commands:
 
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
+To compile the project:
 
 ```
-expected output
+make compile
 ```
 
-## Feature ABC
+To run the chatbot:
 
-// Feature details
+```
+make run
+```
 
-## Feature XYZ
+To run the tests:
 
-// Feature details
+```
+make test
+```
+
+### Adding a Todo
+
+Add a simple todo task.
+
+```
+todo read book
+```
+
+### Adding a Deadline
+
+Add a task with a deadline.
+
+```
+deadline submit report /by tomorrow
+```
+
+### Adding an Event
+
+Add an event with a start and end time.
+
+```
+event meeting /from 10am /to 11am
+```
+
+### Listing Tasks
+
+Show all current tasks.
+
+```
+list
+```
+
+### Marking/Unmarking Tasks
+
+Mark a task as done:
+
+```
+mark 2
+```
+
+Unmark a task:
+
+```
+unmark 2
+```
+
+### Deleting a Task
+
+Delete a task by its number:
+
+```
+delete 2
+```
+
+### Exiting
+
+Exit the chatbot:
+
+```
+bye
+```

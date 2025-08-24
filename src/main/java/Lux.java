@@ -2,13 +2,27 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.List;
 import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class Lux {
     public static void main(String[] args) throws LuxException {
+        String filePath = "data/tasks";
+
         List<Task> tasks = new ArrayList<>();
+        try {
+            tasks = deserializeTasks(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Set<String> keywords = new HashSet<>();
         keywords.add("list");
         keywords.add("deadline");
@@ -47,6 +61,13 @@ public class Lux {
                     System.out.println("LUX: Goodbye! Hope to see you again soon!");
                     System.out.println(divider);
                     scanner.close();
+
+                    try {
+                        serializeTasks(tasks, filePath);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     return;
                 } else if (k.equals("list")) {
                     System.out.println("LUX: Here are your current tasks:");
@@ -165,5 +186,39 @@ public class Lux {
             String item = String.format("  %d. %s", i, texts.get(i));
             System.out.println(item);
         }
+    }
+
+    private static void serializeTasks(List<Task> tasks, String filePath) throws IOException {
+        filePath += ".json";
+        File f = new File(filePath);
+        f.getParentFile().mkdirs();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(tasks);
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+            fos.write(json.getBytes());
+        }
+    }
+
+    private static ArrayList<Task> deserializeTasks(String filePath) throws IOException {
+        filePath += ".json";
+        File f = new File(filePath);
+        if (!f.exists()) {
+            return new ArrayList<>();
+        }
+
+        Gson gson = new Gson();
+        StringBuilder sb = new StringBuilder();
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            int c;
+            while ((c = fis.read()) != -1) {
+                sb.append((char) c);
+            }
+        }
+
+        TypeToken<ArrayList<Task>> taskListType = new TypeToken<ArrayList<Task>>() {
+        };
+        ArrayList<Task> loadedTasks = gson.fromJson(sb.toString(), taskListType);
+        return loadedTasks == null ? new ArrayList<Task>() : loadedTasks;
     }
 }

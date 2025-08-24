@@ -1,14 +1,17 @@
 SRC_DIR := src/main/java
-OUT_DIR := bin 
+OUT_DIR := target/classes 
 
 SOURCE := $(shell find $(SRC_DIR) -name "*.java") 
 
 run:
 	@echo "Compiling program..."
-	@mkdir -p $(OUT_DIR)
-	@javac -d $(OUT_DIR) $(SOURCE)
+	@mvn compile
 	@echo "Starting program..."
-	@java -cp $(OUT_DIR) Lux 
+	@mvn exec:java -Dexec.mainClass="Lux"
+
+compile:
+	@echo "Compiling program..."
+	@mvn compile
 
 test:
 	@echo "Running tests..."
