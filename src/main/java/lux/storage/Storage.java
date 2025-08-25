@@ -1,3 +1,5 @@
+package lux.storage;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -5,6 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+
+import lux.data.Task;
+import lux.data.TaskList;
+import lux.exception.LuxException;
 
 public class Storage {
     String filePath;

@@ -1,5 +1,10 @@
+package lux.ui;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
+import lux.data.Task;
+import lux.data.TaskList;
 
 public class Ui {
     private Scanner scanner;

@@ -1,3 +1,5 @@
+package lux.data;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

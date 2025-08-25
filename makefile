@@ -7,7 +7,7 @@ run:
 	@echo "Compiling program..."
 	@mvn compile
 	@echo "Starting program..."
-	@mvn exec:java -Dexec.mainClass="Lux"
+	@mvn exec:java -Dexec.mainClass="lux.Lux"
 
 compile:
 	@echo "Compiling program..."

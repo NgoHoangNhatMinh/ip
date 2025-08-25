@@ -1,3 +1,12 @@
+package lux;
+
+import lux.commands.Command;
+import lux.data.TaskList;
+import lux.exception.LuxException;
+import lux.parser.Parser;
+import lux.storage.Storage;
+import lux.ui.Ui;
+
 public class Lux {
     private Storage storage;
     private TaskList tasks;

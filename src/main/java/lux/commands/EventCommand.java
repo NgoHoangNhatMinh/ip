@@ -1,5 +1,13 @@
+package lux.commands;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+
+import lux.data.EventTask;
+import lux.data.TaskList;
+import lux.exception.LuxException;
+import lux.storage.Storage;
+import lux.ui.Ui;
 
 public class EventCommand extends Command {
     private String arguments;
