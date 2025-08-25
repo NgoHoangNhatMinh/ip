@@ -1,6 +1,6 @@
 public class ListCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        System.out.println(tasks);
+        ui.listTasks(tasks);
     }
 
     public boolean isExit() {

@@ -10,17 +10,48 @@ public class Ui {
 
     public void showWelcome() {
         showLine();
-        System.out.println("LUX: Hello! I'm LUX, your personal assistant chatbot.");
-        System.out.println("LUX: How can I assist you today?");
+        System.out.println("Hello! I'm LUX, your personal assistant chatbot.");
+        System.out.println("How can I assist you today?");
         showLine();
     }
 
+    public void listTasks(TaskList tasks) {
+        System.out.println(tasks);
+    }
+
+    public void addTodo(Task task) {
+        System.out.println("Added a new deadline task:\n    " + task);
+    }
+
+    public void addDeadline(Task task) {
+        System.out.println("Added a new deadline task:\n    " + task);
+    }
+
+    public void addEvent(Task task) {
+        System.out.println("Added a new event task:\n    " + task);
+    }
+
+    public void deleteTask(Task task) {
+        System.out.println("I've deleted this task");
+        System.out.println("    " + task);
+    }
+
+    public void markTask(Task task) {
+        System.out.println("Great! I've marked this task as done:");
+        System.out.println("    " + task);
+    }
+
+    public void unmarkTask(Task task) {
+        System.out.println("I've unmarked this task:");
+        System.out.println("    " + task);
+    }
+
     public void showBye() {
-        System.out.println("LUX: Goodbye! Hope to see you again soon!");
+        System.out.println("Goodbye! Hope to see you again soon!");
     }
 
     public void showLoadingError() {
-        System.err.println("LUX: Loading error");
+        System.err.println("Loading error");
     }
 
     public void showLine() {

@@ -12,6 +12,7 @@ public class MarkCommand extends Command {
                 throw new LuxException("Please specify the task number you want to mark.");
             }
             tasks.getTasks().get(idx).mark();
+            ui.markTask(tasks.getTasks().get(idx));
         } catch (NumberFormatException e) {
             throw new LuxException("Please specify the task number you want to mark.");
 

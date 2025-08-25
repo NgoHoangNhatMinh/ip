@@ -12,6 +12,7 @@ public class UnmarkCommand extends Command {
                 throw new LuxException("Please specify the task number you want to unmark.");
             }
             tasks.getTasks().get(idx).unmark();
+            ui.unmarkTask(tasks.getTasks().get(idx));
         } catch (NumberFormatException e) {
             throw new LuxException(e.getMessage());
         }

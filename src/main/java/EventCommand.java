@@ -22,7 +22,9 @@ public class EventCommand extends Command {
         try {
             LocalDateTime from = LocalDateTime.parse(toSplit[0].trim(), ui.getTimeFormatter());
             LocalDateTime to = LocalDateTime.parse(toSplit[1].trim(), ui.getTimeFormatter());
-            tasks.addTasks(new EventTask(description, from, to));
+            EventTask task = new EventTask(description, from, to);
+            tasks.addTasks(task);
+            ui.addEvent(task);
         } catch (DateTimeParseException e) {
             throw new LuxException(
                     "Error: Invalid date/time format. Please follow this format: " + ui.getTimeFormatter());

@@ -6,7 +6,9 @@ public class TodoCommand extends Command {
     }
 
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.addTasks(new TodoTask(argument));
+        TodoTask task = new TodoTask(argument);
+        tasks.addTasks(task);
+        ui.addTodo(task);
     }
 
     public boolean isExit() {

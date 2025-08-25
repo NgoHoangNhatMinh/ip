@@ -11,7 +11,8 @@ public class DeleteCommand extends Command {
             if (idx < 0 || idx >= tasks.getTasks().size()) {
                 throw new LuxException("Please specify the task number you want to delete.");
             }
-            tasks.getTasks().remove(idx);
+            Task task = tasks.getTasks().remove(idx);
+            ui.deleteTask(task);
         } catch (NumberFormatException e) {
             throw new LuxException("Please specify the task number you want to delete.");
 

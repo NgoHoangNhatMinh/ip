@@ -33,6 +33,6 @@ public class Lux {
     }
 
     public static void main(String[] args) {
-        new Lux("data/tasks").run();
+        new Lux("data/tasks.ser").run();
     }
 }

@@ -17,7 +17,9 @@ public class DeadlineCommand extends Command {
 
         try {
             LocalDateTime by = LocalDateTime.parse(parts[1].trim(), ui.getTimeFormatter());
-            tasks.addTasks(new DeadlineTask(description, by));
+            DeadlineTask task = new DeadlineTask(description, by);
+            tasks.addTasks(task);
+            ui.addDeadline(task);
         } catch (DateTimeParseException e) {
             throw new LuxException(
                     "Error: Invalid date/time format. Please follow this format: " + ui.getTimeFormatter());
