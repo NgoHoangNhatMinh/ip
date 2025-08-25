@@ -16,224 +16,170 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public class Lux {
-    public static void main(String[] args) throws LuxException {
-        String filePath = "data/tasks";
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HHmm");
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
 
-        List<Task> tasks = new ArrayList<>();
+    public Lux(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
         try {
-            tasks = deserializeTasks(filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Set<String> keywords = new HashSet<>();
-        keywords.add("list");
-        keywords.add("deadline");
-        keywords.add("/by");
-        keywords.add("/from");
-        keywords.add("/to");
-        keywords.add("event");
-        keywords.add("todo");
-        keywords.add("mark");
-        keywords.add("unmark");
-        keywords.add("bye");
-        keywords.add("delete");
-
-        final String divider = "========================================";
-        System.out.println(divider);
-        System.out.println("LUX: Hello! I'm LUX, your personal assistant chatbot.");
-        System.out.println("LUX: How can I assist you today?");
-        System.out.println(divider);
-
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            Map<String, String> parsedCommand = null;
-            while (parsedCommand == null) {
-                try {
-                    System.out.print("You: ");
-                    String userInput = scanner.nextLine();
-                    parsedCommand = parseCommand(userInput, keywords);
-                } catch (LuxException e) {
-                    System.err.println(e);
-                }
-            }
-
-            for (Map.Entry<String, String> entry : parsedCommand.entrySet()) {
-                String k = entry.getKey(), v = entry.getValue();
-                if (k.equals("bye")) {
-                    System.out.println("LUX: Goodbye! Hope to see you again soon!");
-                    System.out.println(divider);
-                    scanner.close();
-
-                    try {
-                        serializeTasks(tasks, filePath);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    return;
-                } else if (k.equals("list")) {
-                    System.out.println("LUX: Here are your current tasks:");
-                    list(tasks);
-                } else if (k.equals("mark")) {
-                    if (v.equals("")) {
-                        System.err
-                                .println(new LuxException("Please specify the task number you want to mark as done."));
-                        break;
-                    }
-                    int idx = Integer.parseInt(v);
-                    if (idx >= 0 && idx < tasks.size()) {
-                        tasks.get(idx).mark();
-                        System.out.println("LUX: Task " + idx + " marked as done.");
-                    } else {
-                        System.out.println("LUX: Invalid task number.");
-                    }
-                } else if (k.equals("unmark")) {
-                    if (v.equals("")) {
-                        System.err.println(
-                                new LuxException("Please specify the task number you want to mark as not done."));
-                        break;
-                    }
-                    int idx = Integer.parseInt(v);
-                    if (idx >= 0 && idx < tasks.size()) {
-                        tasks.get(idx).unmark();
-                        System.out.println("LUX: Task " + idx + " marked as not done.");
-                    } else {
-                        System.out.println("LUX: Invalid task number.");
-                    }
-                } else if (k.equals("todo")) {
-                    if (v.equals("")) {
-                        System.err.println(new LuxException("Please provide a description for your todo task."));
-                        break;
-                    }
-                    TodoTask t = new TodoTask(v);
-                    tasks.add(t);
-                    System.out.println("LUX: Added a new todo task:\n    " + t);
-                } else if (k.equals("deadline")) {
-                    if (v.equals("")) {
-                        System.err.println(new LuxException("Please provide a description for your deadline task."));
-                        break;
-                    }
-                    if (parsedCommand.containsKey("/by")) {
-                        try {
-                            LocalDateTime time = LocalDateTime.parse(parsedCommand.get("/by"), timeFormatter);
-                            DeadlineTask t = new DeadlineTask(v, time);
-                            tasks.add(t);
-                            System.out.println("LUX: Added a new deadline task:\n    " + t);
-                        } catch (DateTimeParseException e) {
-                            System.err.println(
-                                    "Error: Invalid date/time format. Please follow this format: " + timeFormatter);
-                        }
-
-                    } else {
-                        System.err.println(new LuxException("Please specify the deadline using /by."));
-                    }
-                } else if (k.equals("event")) {
-                    if (v.equals("")) {
-                        System.err.println(new LuxException("Please provide a description for your event task."));
-                        break;
-                    }
-                    if (parsedCommand.containsKey("/from") && parsedCommand.containsKey("/to")) {
-                        try {
-                            LocalDateTime fromTime = LocalDateTime.parse(parsedCommand.get("/from"), timeFormatter);
-                            LocalDateTime toTime = LocalDateTime.parse(parsedCommand.get("/to"), timeFormatter);
-                            EventTask t = new EventTask(v, fromTime, toTime);
-                            tasks.add(t);
-                            System.out.println("LUX: Added a new event task:\n    " + t);
-                        } catch (DateTimeParseException e) {
-                            System.err.println(
-                                    "Error: Invalid date/time format. Please follow this format: " + timeFormatter);
-                        }
-                    } else {
-                        System.err.println(new LuxException("Please specify both /from and /to for your event."));
-                    }
-                } else if (k.equals("delete")) {
-                    if (v.equals("")) {
-                        System.err.println(new LuxException("Please specify the task number you want to delete."));
-                        break;
-                    }
-                    int idx = Integer.parseInt(v);
-                    if (idx >= 0 && idx < tasks.size()) {
-                        tasks.remove(idx);
-                        System.out.println("LUX: Task " + idx + " deleted.");
-                    } else {
-                        System.out.println("LUX: Invalid task number.");
-                    }
-                }
-            }
-            System.out.println(divider);
+            tasks = new TaskList(storage.load());
+        } catch (LuxException e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
         }
     }
 
-    // Parse command into a map of {commands: arguments}
-    private static Map<String, String> parseCommand(String userInput, Set<String> keywords) throws LuxException {
-        Map<String, String> parsed = new LinkedHashMap<>();
-        String[] tokens = userInput.split(" ");
+    // public static void notMain(String[] args) throws LuxException {
+    // String filePath = "data/tasks";
+    // DateTimeFormatter timeFormatter =
+    // DateTimeFormatter.ofPattern("yyyy-MM-dd:HHmm");
 
-        String key = null;
-        String value = "";
+    // List<Task> tasks = new ArrayList<>();
 
-        for (String t : tokens) {
-            if (keywords.contains(t)) {
-                if (key != null) {
-                    parsed.put(key, value.trim());
-                }
-                key = t;
-                value = "";
-            } else {
-                value += t + " ";
+    // Scanner scanner = new Scanner(System.in);
+    // while (true) {
+    // Map<String, String> parsedCommand = null;
+    // while (parsedCommand == null) {
+    // try {
+    // System.out.print("You: ");
+    // String userInput = scanner.nextLine();
+    // parsedCommand = parseCommand(userInput, keywords);
+    // } catch (LuxException e) {
+    // System.err.println(e);
+    // }
+    // }
+
+    // for (Map.Entry<String, String> entry : parsedCommand.entrySet()) {
+    // String k = entry.getKey(), v = entry.getValue();
+    // if (k.equals("bye")) {
+    // System.out.println("LUX: Goodbye! Hope to see you again soon!");
+    // System.out.println(divider);
+    // scanner.close();
+
+    // return;
+    // } else if (k.equals("mark")) {
+    // if (v.equals("")) {
+    // System.err
+    // .println(new LuxException("Please specify the task number you want to mark as
+    // done."));
+    // break;
+    // }
+    // int idx = Integer.parseInt(v);
+    // if (idx >= 0 && idx < tasks.size()) {
+    // tasks.get(idx).mark();
+    // System.out.println("LUX: Task " + idx + " marked as done.");
+    // } else {
+    // System.out.println("LUX: Invalid task number.");
+    // }
+    // } else if (k.equals("unmark")) {
+    // if (v.equals("")) {
+    // System.err.println(
+    // new LuxException("Please specify the task number you want to mark as not
+    // done."));
+    // break;
+    // }
+    // int idx = Integer.parseInt(v);
+    // if (idx >= 0 && idx < tasks.size()) {
+    // tasks.get(idx).unmark();
+    // System.out.println("LUX: Task " + idx + " marked as not done.");
+    // } else {
+    // System.out.println("LUX: Invalid task number.");
+    // }
+    // } else if (k.equals("todo")) {
+    // if (v.equals("")) {
+    // System.err.println(new LuxException("Please provide a description for your
+    // todo task."));
+    // break;
+    // }
+    // TodoTask t = new TodoTask(v);
+    // tasks.add(t);
+    // System.out.println("LUX: Added a new todo task:\n " + t);
+    // } else if (k.equals("deadline")) {
+    // if (v.equals("")) {
+    // System.err.println(new LuxException("Please provide a description for your
+    // deadline task."));
+    // break;
+    // }
+    // if (parsedCommand.containsKey("/by")) {
+    // try {
+    // LocalDateTime time = LocalDateTime.parse(parsedCommand.get("/by"),
+    // timeFormatter);
+    // DeadlineTask t = new DeadlineTask(v, time);
+    // tasks.add(t);
+    // System.out.println("LUX: Added a new deadline task:\n " + t);
+    // } catch (DateTimeParseException e) {
+    // System.err.println(
+    // "Error: Invalid date/time format. Please follow this format: " +
+    // timeFormatter);
+    // }
+
+    // } else {
+    // System.err.println(new LuxException("Please specify the deadline using
+    // /by."));
+    // }
+    // } else if (k.equals("event")) {
+    // if (v.equals("")) {
+    // System.err.println(new LuxException("Please provide a description for your
+    // event task."));
+    // break;
+    // }
+    // if (parsedCommand.containsKey("/from") && parsedCommand.containsKey("/to")) {
+    // try {
+    // LocalDateTime fromTime = LocalDateTime.parse(parsedCommand.get("/from"),
+    // timeFormatter);
+    // LocalDateTime toTime = LocalDateTime.parse(parsedCommand.get("/to"),
+    // timeFormatter);
+    // EventTask t = new EventTask(v, fromTime, toTime);
+    // tasks.add(t);
+    // System.out.println("LUX: Added a new event task:\n " + t);
+    // } catch (DateTimeParseException e) {
+    // System.err.println(
+    // "Error: Invalid date/time format. Please follow this format: " +
+    // timeFormatter);
+    // }
+    // } else {
+    // System.err.println(new LuxException("Please specify both /from and /to for
+    // your event."));
+    // }
+    // } else if (k.equals("delete")) {
+    // if (v.equals("")) {
+    // System.err.println(new LuxException("Please specify the task number you want
+    // to delete."));
+    // break;
+    // }
+    // int idx = Integer.parseInt(v);
+    // if (idx >= 0 && idx < tasks.size()) {
+    // tasks.remove(idx);
+    // System.out.println("LUX: Task " + idx + " deleted.");
+    // } else {
+    // System.out.println("LUX: Invalid task number.");
+    // }
+    // }
+    // }
+    // }
+    // }
+
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                ui.showLine();
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (LuxException e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
             }
         }
-
-        if (key != null) {
-            parsed.put(key, value.trim());
-        } else {
-            throw new LuxException("Sorry, I didn't understand that command. Please try again!");
-        }
-
-        return parsed;
     }
 
-    private static void list(List<Task> texts) {
-        if (texts.isEmpty()) {
-            System.out.println("  (No tasks yet!)");
-            return;
-        }
-        for (int i = 0; i < texts.size(); i++) {
-            String item = String.format("  %d. %s", i, texts.get(i));
-            System.out.println(item);
-        }
-    }
-
-    // TODO: change to human readable format
-    private static void serializeTasks(List<Task> tasks, String filePath) throws IOException {
-        filePath += ".ser";
-        File f = new File(filePath);
-        f.getParentFile().mkdirs();
-
-        try (FileOutputStream fileOut = new FileOutputStream(filePath);
-                ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(tasks);
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
-    }
-
-    private static ArrayList<Task> deserializeTasks(String filePath) throws IOException {
-        filePath += ".ser";
-        File f = new File(filePath);
-        if (!f.exists()) {
-            return new ArrayList<>();
-        }
-
-        try (FileInputStream fileIn = new FileInputStream(filePath);
-                ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            @SuppressWarnings("unchecked")
-            ArrayList<Task> loadedTasks = (ArrayList<Task>) in.readObject();
-            return loadedTasks;
-        } catch (IOException | ClassNotFoundException c) {
-            return new ArrayList<>();
-        }
+    public static void main(String[] args) {
+        new Lux("data/tasks").run();
     }
 }

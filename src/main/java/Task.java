@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public abstract class Task implements Serializable {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
