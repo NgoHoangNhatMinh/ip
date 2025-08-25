@@ -15,9 +15,10 @@ bin/
 
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
+text-ui-test/data/
 
 # local data
-data/
+/data/
 .vscode/
 
 # Maven target directory

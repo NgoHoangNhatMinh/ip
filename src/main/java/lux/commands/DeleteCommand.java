@@ -1,3 +1,11 @@
+package lux.commands;
+
+import lux.data.Task;
+import lux.data.TaskList;
+import lux.exception.LuxException;
+import lux.storage.Storage;
+import lux.ui.Ui;
+
 public class DeleteCommand extends Command {
     private String argument;
 
