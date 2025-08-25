@@ -1,0 +1,24 @@
+public class DeleteCommand extends Command {
+    private String argument;
+
+    public DeleteCommand(String argument) {
+        this.argument = argument;
+    }
+
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
+        try {
+            int idx = Integer.parseInt(argument);
+            if (idx < 0 || idx >= tasks.getTasks().size()) {
+                throw new LuxException("Please specify the task number you want to delete.");
+            }
+            tasks.getTasks().remove(idx);
+        } catch (NumberFormatException e) {
+            throw new LuxException("Please specify the task number you want to delete.");
+
+        }
+    }
+
+    public boolean isExit() {
+        return false;
+    }
+}

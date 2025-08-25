@@ -1,3 +1,4 @@
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Ui {
@@ -32,5 +33,9 @@ public class Ui {
 
     public String readCommand() {
         return scanner.nextLine();
+    }
+
+    public DateTimeFormatter getTimeFormatter() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd:HHmm");
     }
 }

@@ -16,6 +16,10 @@ public class TaskList implements Serializable {
         return tasks;
     }
 
+    public void addTasks(Task task) {
+        tasks.add(task);
+    }
+
     @Override
     public String toString() {
         if (tasks.isEmpty()) {
