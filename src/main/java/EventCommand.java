@@ -11,12 +11,14 @@ public class EventCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         String[] fromSplit = arguments.split(" /from ", 2);
         if (fromSplit.length < 2) {
-            throw new LuxException("Please specify the start time using /from.");
+            throw new LuxException(
+                    "Please follow this format: todo {description} /from {HHmm dd-MM-yyyy} /to {HHmm dd-MM-yyyy}");
         }
         String description = fromSplit[0].trim();
         String[] toSplit = fromSplit[1].split(" /to ", 2);
         if (toSplit.length < 2) {
-            throw new LuxException("Please specify the end time using /to.");
+            throw new LuxException(
+                    "Please follow this format: todo {description} /from {HHmm dd-MM-yyyy} /to {HHmm dd-MM-yyyy}");
         }
 
         try {
@@ -27,7 +29,7 @@ public class EventCommand extends Command {
             ui.addEvent(task);
         } catch (DateTimeParseException e) {
             throw new LuxException(
-                    "Error: Invalid date/time format. Please follow this format: " + ui.getTimeFormatter());
+                    "Error: Invalid date/time format. Please follow this format: {HHmm dd-MM-yyyy}");
         }
 
     }

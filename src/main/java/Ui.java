@@ -67,6 +67,6 @@ public class Ui {
     }
 
     public DateTimeFormatter getTimeFormatter() {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd:HHmm");
+        return DateTimeFormatter.ofPattern("HHmm dd-MM-yyyy");
     }
 }

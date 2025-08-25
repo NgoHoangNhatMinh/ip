@@ -11,7 +11,7 @@ public class DeadlineCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         String[] parts = arguments.split(" /by ", 2);
         if (parts.length < 2) {
-            throw new LuxException("Please specify the deadline using /by.");
+            throw new LuxException("Please follow this format: deadline {description} /by {HHmm dd-MM-yyyy}");
         }
         String description = parts[0].trim();
 
@@ -22,7 +22,7 @@ public class DeadlineCommand extends Command {
             ui.addDeadline(task);
         } catch (DateTimeParseException e) {
             throw new LuxException(
-                    "Error: Invalid date/time format. Please follow this format: " + ui.getTimeFormatter());
+                    "Error: Invalid date/time format. Please follow this format: {HHmm dd-MM-yyyy}");
         }
 
     }
