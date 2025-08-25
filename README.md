@@ -16,8 +16,8 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
 1. After that, locate the `src/main/java/Lux.java` file, right-click it, and choose `Run Lux.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
    ```
    ========================================
-   LUX: Hello! I'm LUX, your personal assistant chatbot.
-   LUX: How can I assist you today?
+   Hello! I'm LUX, your personal assistant chatbot.
+   How can I assist you today?
    ========================================
    ```
 

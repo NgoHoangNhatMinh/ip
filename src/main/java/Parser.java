@@ -1,0 +1,44 @@
+import java.util.HashSet;
+import java.util.Set;
+
+public class Parser {
+    private Set<String> keywords;
+
+    public Parser() {
+        keywords = new HashSet<>();
+        keywords.add("list");
+        keywords.add("todo");
+        keywords.add("deadline");
+        keywords.add("event");
+        keywords.add("mark");
+        keywords.add("unmark");
+        keywords.add("delete");
+        keywords.add("bye");
+    }
+
+    public static Command parse(String fullCommand) throws LuxException {
+        String[] parts = fullCommand.trim().split("\\s+", 2);
+        String commandWord = parts[0];
+        String arguments = parts.length > 1 ? parts[1] : "";
+        switch (commandWord) {
+            case "list":
+                return new ListCommand();
+            case "todo":
+                return new TodoCommand(arguments);
+            case "deadline":
+                return new DeadlineCommand(arguments);
+            case "event":
+                return new EventCommand(arguments);
+            case "mark":
+                return new MarkCommand(arguments);
+            case "unmark":
+                return new UnmarkCommand(arguments);
+            case "delete":
+                return new DeleteCommand(arguments);
+            case "bye":
+                return new ByeCommand();
+            default:
+                throw new LuxException("Unknown command: " + commandWord);
+        }
+    }
+}
