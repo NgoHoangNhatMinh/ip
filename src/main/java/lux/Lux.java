@@ -7,6 +7,9 @@ import lux.parser.Parser;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * The main class for the Lux chatbot
+ */
 public class Lux {
     private Storage storage;
     private TaskList tasks;
@@ -23,6 +26,9 @@ public class Lux {
         }
     }
 
+    /**
+     * Runs the main loop of the application
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;

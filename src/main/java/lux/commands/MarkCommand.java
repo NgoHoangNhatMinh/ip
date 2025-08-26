@@ -12,6 +12,9 @@ public class MarkCommand extends Command {
         this.argument = argument;
     }
 
+    /**
+     * Parse argument to get the index of task to mark
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         try {
             int idx = Integer.parseInt(argument);
