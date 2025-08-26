@@ -14,21 +14,18 @@ import lux.commands.TodoCommand;
 import lux.commands.UnmarkCommand;
 import lux.exception.LuxException;
 
+/**
+ * This class parses user's input and return commands accordingly
+ */
 public class Parser {
-    private Set<String> keywords;
 
-    public Parser() {
-        keywords = new HashSet<>();
-        keywords.add("list");
-        keywords.add("todo");
-        keywords.add("deadline");
-        keywords.add("event");
-        keywords.add("mark");
-        keywords.add("unmark");
-        keywords.add("delete");
-        keywords.add("bye");
-    }
-
+    /**
+     * parse user's input into appropriate command
+     * 
+     * @param fullCommand raw string of user input
+     * @return specific command based on the first word of user's input
+     * @throws LuxException
+     */
     public static Command parse(String fullCommand) throws LuxException {
         String[] parts = fullCommand.trim().split("\\s+", 2);
         String commandWord = parts[0];

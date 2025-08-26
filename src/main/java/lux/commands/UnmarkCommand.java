@@ -12,6 +12,9 @@ public class UnmarkCommand extends Command {
         this.argument = argument;
     }
 
+    /**
+     * Parse argument to get the index of task to unmark
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         try {
             int idx = Integer.parseInt(argument);

@@ -16,6 +16,10 @@ public class DeadlineCommand extends Command {
         this.arguments = arguments;
     }
 
+    /**
+     * Parse command's argument into description and time based on "/by" keyword
+     * Add deadline task to the list of tasks
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         String[] parts = arguments.split(" /by ", 2);
         if (parts.length < 2) {

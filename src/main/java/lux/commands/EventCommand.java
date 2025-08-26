@@ -16,6 +16,11 @@ public class EventCommand extends Command {
         this.arguments = arguments;
     }
 
+    /**
+     * Parse command's argument into description, from time, and to time based on
+     * "/from" and "/to" keyword
+     * Add event task to the list of tasks
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         String[] fromSplit = arguments.split(" /from ", 2);
         if (fromSplit.length < 2) {
