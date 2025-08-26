@@ -55,6 +55,11 @@ public class Ui {
         System.out.println("Goodbye! Hope to see you again soon!");
     }
 
+    public void findTasks(TaskList tasks) {
+        System.out.println("Here are the matching tasks in your list: ");
+        listTasks(tasks);
+    }
+
     public void showLoadingError() {
         System.err.println("Loading error");
     }
