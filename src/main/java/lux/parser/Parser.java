@@ -8,6 +8,7 @@ import lux.commands.Command;
 import lux.commands.DeadlineCommand;
 import lux.commands.DeleteCommand;
 import lux.commands.EventCommand;
+import lux.commands.FindCommand;
 import lux.commands.ListCommand;
 import lux.commands.MarkCommand;
 import lux.commands.TodoCommand;
@@ -50,6 +51,8 @@ public class Parser {
                 return new DeleteCommand(arguments);
             case "bye":
                 return new ByeCommand();
+            case "find":
+                return new FindCommand(arguments);
             default:
                 throw new LuxException("Unknown command: " + commandWord);
         }

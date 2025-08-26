@@ -7,7 +7,7 @@ public class TaskList implements Serializable {
     ArrayList<Task> tasks;
 
     public TaskList() {
-
+        this.tasks = new ArrayList<>();
     }
 
     public TaskList(ArrayList<Task> tasks) {
@@ -20,6 +20,16 @@ public class TaskList implements Serializable {
 
     public void addTasks(Task task) {
         tasks.add(task);
+    }
+
+    public TaskList find(String searchTerm) {
+        TaskList foundTasks = new TaskList();
+        for (Task task : tasks) {
+            if (task.contains(searchTerm)) {
+                foundTasks.addTasks(task);
+            }
+        }
+        return foundTasks;
     }
 
     @Override

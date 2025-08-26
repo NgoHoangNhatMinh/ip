@@ -23,6 +23,10 @@ public abstract class Task implements Serializable {
         isDone = false;
     }
 
+    public boolean contains(String searchTerm) {
+        return description.contains(searchTerm);
+    }
+
     @Override
     public String toString() {
         return getStatusIcon() + " " + description;
