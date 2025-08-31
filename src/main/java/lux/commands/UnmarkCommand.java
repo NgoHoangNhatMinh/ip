@@ -5,6 +5,9 @@ import lux.exception.LuxException;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * This command unmark a task as not done
+ */
 public class UnmarkCommand extends Command {
     private String argument;
 

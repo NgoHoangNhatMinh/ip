@@ -3,8 +3,11 @@ package lux.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * A container class to contain the list of all tasks and relevant behaviors
+ */
 public class TaskList implements Serializable {
-    ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
 
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -22,6 +25,11 @@ public class TaskList implements Serializable {
         tasks.add(task);
     }
 
+    /**
+     * Search through the task list for task containing substring searchTerm
+     * @param searchTerm
+     * @return
+     */
     public TaskList find(String searchTerm) {
         TaskList foundTasks = new TaskList();
         for (Task task : tasks) {

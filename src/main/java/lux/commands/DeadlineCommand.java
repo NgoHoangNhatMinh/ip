@@ -9,6 +9,9 @@ import lux.exception.LuxException;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * Add a new deadline task
+ */
 public class DeadlineCommand extends Command {
     private String arguments;
 

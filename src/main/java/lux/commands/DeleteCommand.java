@@ -6,6 +6,9 @@ import lux.exception.LuxException;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * This is the delete command
+ */
 public class DeleteCommand extends Command {
     private String argument;
 

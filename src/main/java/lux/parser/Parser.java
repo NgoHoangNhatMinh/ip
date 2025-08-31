@@ -19,7 +19,7 @@ public class Parser {
 
     /**
      * parse user's input into appropriate command
-     * 
+     *
      * @param fullCommand raw string of user input
      * @return specific command based on the first word of user's input
      * @throws LuxException
@@ -29,26 +29,26 @@ public class Parser {
         String commandWord = parts[0];
         String arguments = parts.length > 1 ? parts[1] : "";
         switch (commandWord) {
-            case "list":
-                return new ListCommand();
-            case "todo":
-                return new TodoCommand(arguments);
-            case "deadline":
-                return new DeadlineCommand(arguments);
-            case "event":
-                return new EventCommand(arguments);
-            case "mark":
-                return new MarkCommand(arguments);
-            case "unmark":
-                return new UnmarkCommand(arguments);
-            case "delete":
-                return new DeleteCommand(arguments);
-            case "bye":
-                return new ByeCommand();
-            case "find":
-                return new FindCommand(arguments);
-            default:
-                throw new LuxException("Unknown command: " + commandWord);
+        case "list":
+            return new ListCommand();
+        case "todo":
+            return new TodoCommand(arguments);
+        case "deadline":
+            return new DeadlineCommand(arguments);
+        case "event":
+            return new EventCommand(arguments);
+        case "mark":
+            return new MarkCommand(arguments);
+        case "unmark":
+            return new UnmarkCommand(arguments);
+        case "delete":
+            return new DeleteCommand(arguments);
+        case "bye":
+            return new ByeCommand();
+        case "find":
+            return new FindCommand(arguments);
+        default:
+            throw new LuxException("Unknown command: " + commandWord);
         }
     }
 }

@@ -15,6 +15,10 @@ public class Lux {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Instantiate a new Lux bot with the given filepath for storage
+     * @param filePath path to store and retrieve saved data
+     */
     public Lux(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);

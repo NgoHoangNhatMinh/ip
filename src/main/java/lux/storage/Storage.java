@@ -16,7 +16,7 @@ import lux.exception.LuxException;
  * The storage class manages saving and loading data
  */
 public class Storage {
-    String filePath;
+    private String filePath;
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -24,7 +24,7 @@ public class Storage {
 
     /**
      * Load tasks from data if it exists, else return an empty task list
-     * 
+     *
      * @return loaded tasks if it exist, else empty list
      * @throws LuxException
      */
@@ -46,7 +46,7 @@ public class Storage {
 
     /**
      * Save tasks to local storage
-     * 
+     *
      * @param tasks
      */
     public void save(TaskList tasks) {

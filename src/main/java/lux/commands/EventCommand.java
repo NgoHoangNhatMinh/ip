@@ -9,6 +9,9 @@ import lux.exception.LuxException;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * Add a new event task
+ */
 public class EventCommand extends Command {
     private String arguments;
 

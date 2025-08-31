@@ -4,6 +4,9 @@ import lux.data.TaskList;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * This command lists all tasks
+ */
 public class ListCommand extends Command {
     /**
      * List all tasks

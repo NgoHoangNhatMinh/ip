@@ -5,6 +5,9 @@ import lux.data.TodoTask;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * Add a new todo task
+ */
 public class TodoCommand extends Command {
     private String argument;
 
