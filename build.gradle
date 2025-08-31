@@ -48,7 +48,7 @@ test {
 }
 
 application {
-    mainClass.set("lux.Lux")
+    mainClass.set("lux.Main")
 }
 
 shadowJar {
