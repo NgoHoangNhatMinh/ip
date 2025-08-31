@@ -1,19 +1,24 @@
 package lux.commands;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StubUi extends lux.ui.Ui {
-    boolean byeShown = false;
+    private boolean byeShown = false;
 
     @Override
     public void showBye() {
         byeShown = true;
     }
+
+    public boolean getByeShown() {
+        return byeShown;
+    }
 }
 
 class StubStorage extends lux.storage.Storage {
-    boolean saved = false;
+    private boolean saved = false;
 
     StubStorage() {
         super("dummy");
@@ -22,6 +27,10 @@ class StubStorage extends lux.storage.Storage {
     @Override
     public void save(lux.data.TaskList tasks) {
         saved = true;
+    }
+
+    public boolean getSaved() {
+        return saved;
     }
 }
 
@@ -44,7 +53,7 @@ public class ByeCommandTest {
 
         cmd.execute(tasks, ui, storage);
 
-        assertTrue(ui.byeShown, "showBye should be called");
-        assertTrue(storage.saved, "save should be called");
+        assertTrue(ui.getByeShown(), "showBye should be called");
+        assertTrue(storage.getSaved(), "save should be called");
     }
 }

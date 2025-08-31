@@ -1,23 +1,33 @@
 package lux.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TodoCommandTest {
     static class StubUi extends lux.ui.Ui {
-        boolean todoAdded = false;
+        private boolean todoAdded = false;
 
         public void addTodo(lux.data.Task task) {
             todoAdded = true;
         }
+
+        public boolean getTodoAdded() {
+            return todoAdded;
+        }
     }
 
     static class StubTaskList extends lux.data.TaskList {
-        boolean added = false;
+        private boolean added = false;
 
         @Override
         public void addTasks(lux.data.Task task) {
             added = true;
+        }
+
+        public boolean getAdded() {
+            return added;
         }
     }
 
