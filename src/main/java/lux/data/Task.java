@@ -9,6 +9,10 @@ public abstract class Task implements Serializable {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Create a task with description
+     * @param description
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;

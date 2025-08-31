@@ -4,6 +4,9 @@ import lux.data.TaskList;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * This is the find command which search all tasks matching the given substring
+ */
 public class FindCommand extends Command {
     private String arguments;
 

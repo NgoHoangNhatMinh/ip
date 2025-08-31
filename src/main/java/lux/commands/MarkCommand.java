@@ -5,6 +5,9 @@ import lux.exception.LuxException;
 import lux.storage.Storage;
 import lux.ui.Ui;
 
+/**
+ * This command marks the task as done
+ */
 public class MarkCommand extends Command {
     private String argument;
 
