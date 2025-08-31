@@ -11,9 +11,9 @@ public class ByeCommand extends Command {
     /**
      * show bye message and save tasks to storage
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showBye();
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         storage.save(tasks);
+        return ui.showBye();
     }
 
     public boolean isExit() {

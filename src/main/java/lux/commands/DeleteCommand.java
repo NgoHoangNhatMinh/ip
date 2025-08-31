@@ -19,14 +19,14 @@ public class DeleteCommand extends Command {
     /**
      * Parse argument to get the index of task to delete
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         try {
             int idx = Integer.parseInt(argument);
             if (idx < 0 || idx >= tasks.getTasks().size()) {
                 throw new LuxException("Please specify the task number you want to delete.");
             }
             Task task = tasks.getTasks().remove(idx);
-            ui.deleteTask(task);
+            return ui.deleteTask(task);
         } catch (NumberFormatException e) {
             throw new LuxException("Please specify the task number you want to delete.");
 

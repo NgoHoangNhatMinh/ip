@@ -14,8 +14,8 @@ public class FindCommand extends Command {
         this.arguments = arguments;
     }
 
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.findTasks(tasks.find(arguments));
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return ui.findTasks(tasks.find(arguments));
     }
 
     public boolean isExit() {

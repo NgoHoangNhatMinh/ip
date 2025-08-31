@@ -24,7 +24,7 @@ public class EventCommand extends Command {
      * "/from" and "/to" keyword
      * Add event task to the list of tasks
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         String[] fromSplit = arguments.split(" /from ", 2);
         if (fromSplit.length < 2) {
             throw new LuxException(
@@ -42,7 +42,7 @@ public class EventCommand extends Command {
             LocalDateTime to = LocalDateTime.parse(toSplit[1].trim(), ui.getTimeFormatter());
             EventTask task = new EventTask(description, from, to);
             tasks.addTasks(task);
-            ui.addEvent(task);
+            return ui.addEvent(task);
         } catch (DateTimeParseException e) {
             throw new LuxException(
                     "Error: Invalid date/time format. Please follow this format: {HHmm dd-MM-yyyy}");

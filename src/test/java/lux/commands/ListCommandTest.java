@@ -1,15 +1,18 @@
 package lux.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ListCommandTest {
     static class StubUi extends lux.ui.Ui {
-        boolean listed = false;
+        private boolean listed = false;
 
         @Override
-        public void listTasks(lux.data.TaskList tasks) {
+        public String listTasks(lux.data.TaskList tasks) {
             listed = true;
+            return tasks.toString();
         }
     }
 

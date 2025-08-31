@@ -18,14 +18,14 @@ public class MarkCommand extends Command {
     /**
      * Parse argument to get the index of task to mark
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         try {
             int idx = Integer.parseInt(argument);
             if (idx < 0 || idx >= tasks.getTasks().size()) {
                 throw new LuxException("Please specify the task number you want to mark.");
             }
             tasks.getTasks().get(idx).mark();
-            ui.markTask(tasks.getTasks().get(idx));
+            return ui.markTask(tasks.getTasks().get(idx));
         } catch (NumberFormatException e) {
             throw new LuxException("Please specify the task number you want to mark.");
 

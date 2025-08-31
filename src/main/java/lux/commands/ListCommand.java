@@ -11,8 +11,8 @@ public class ListCommand extends Command {
     /**
      * List all tasks
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.listTasks(tasks);
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return ui.listTasks(tasks);
     }
 
     public boolean isExit() {
