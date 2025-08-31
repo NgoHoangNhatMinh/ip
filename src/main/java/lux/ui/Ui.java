@@ -22,112 +22,115 @@ public class Ui {
     /**
      * Print welcome
      */
-    public void showWelcome() {
-        showLine();
-        System.out.println("Hello! I'm LUX, your personal assistant chatbot.");
-        System.out.println("How can I assist you today?");
-        showLine();
+    public String showWelcome() {
+        String message = "Hello! I'm LUX, your personal assistant chatbot.\nHow can I assist you today?";
+        return message;
     }
 
     /**
      * Print list task
+     *
      * @param tasks
      */
-    public void listTasks(TaskList tasks) {
-        System.out.println(tasks);
+    public String listTasks(TaskList tasks) {
+        String message = tasks.toString();
+        return message;
     }
 
     /**
      * Print add todo
+     *
      * @param task
      */
-    public void addTodo(Task task) {
-        System.out.println("Added a new deadline task:\n    " + task);
+    public String addTodo(Task task) {
+        String message = "Added a new deadline task:\n    " + task;
+        return message;
     }
 
     /**
      * Print add deadline
+     *
      * @param task
      */
-    public void addDeadline(Task task) {
-        System.out.println("Added a new deadline task:\n    " + task);
+    public String addDeadline(Task task) {
+        String message = "Added a new deadline task:\n    " + task;
+        return message;
     }
 
     /**
      * Print add event
+     *
      * @param task
      */
-    public void addEvent(Task task) {
-        System.out.println("Added a new event task:\n    " + task);
+    public String addEvent(Task task) {
+        String message = "Added a new event task:\n    " + task;
+        return message;
     }
 
     /**
      * Print deleted task
+     *
      * @param task
      */
-    public void deleteTask(Task task) {
-        System.out.println("I've deleted this task");
-        System.out.println("    " + task);
+    public String deleteTask(Task task) {
+        String message = "I've deleted this task\n" + "    " + task;
+        return message;
     }
 
     /**
      * Print mark task
+     *
      * @param task
      */
-    public void markTask(Task task) {
-        System.out.println("Great! I've marked this task as done:");
-        System.out.println("    " + task);
+    public String markTask(Task task) {
+        String message = "Great! I've marked this task as done:" + "    " + task;
+        return message;
     }
 
     /**
      * Print unmark task
+     *
      * @param task
      */
-    public void unmarkTask(Task task) {
-        System.out.println("I've unmarked this task:");
-        System.out.println("    " + task);
+    public String unmarkTask(Task task) {
+        String message = "I've unmarked this task:" + "    " + task;
+        return message;
     }
 
     /**
      * Print bye
      */
-    public void showBye() {
-        System.out.println("Goodbye! Hope to see you again soon!");
+    public String showBye() {
+        String message = "Goodbye! Hope to see you again soon!";
+        return message;
     }
 
     /**
      * Print found task
+     *
      * @param tasks
      */
-    public void findTasks(TaskList tasks) {
-        System.out.println("Here are the matching tasks in your list: ");
-        listTasks(tasks);
+    public String findTasks(TaskList tasks) {
+        return "Here are the matching tasks in your list: " + listTasks(tasks);
     }
 
     /**
      * Print loading error
      */
-    public void showLoadingError() {
-        System.err.println("Loading error");
+    public String showLoadingError() {
+        return "Loading error";
     }
 
     /**
      * Print dividing line
      */
-    public void showLine() {
-        System.out.println("========================================");
-    }
-
-    /**
-     * Print generic error
-     * @param e
-     */
-    public void showError(String e) {
-        System.err.println(e);
+    public String showLine() {
+        return "========================================";
     }
 
     /**
      * Read user's input
+     *
      * @return
      */
     public String readCommand() {
@@ -136,6 +139,7 @@ public class Ui {
 
     /**
      * Format datetime according to pattern
+     *
      * @return
      */
     public DateTimeFormatter getTimeFormatter() {

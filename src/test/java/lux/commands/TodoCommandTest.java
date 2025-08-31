@@ -9,8 +9,10 @@ public class TodoCommandTest {
     static class StubUi extends lux.ui.Ui {
         private boolean todoAdded = false;
 
-        public void addTodo(lux.data.Task task) {
+        public String addTodo(lux.data.Task task) {
             todoAdded = true;
+            String message = "Added a new deadline task:\n    " + task;
+            return message;
         }
 
         public boolean getTodoAdded() {

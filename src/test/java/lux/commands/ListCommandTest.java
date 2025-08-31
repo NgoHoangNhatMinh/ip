@@ -10,8 +10,9 @@ public class ListCommandTest {
         private boolean listed = false;
 
         @Override
-        public void listTasks(lux.data.TaskList tasks) {
+        public String listTasks(lux.data.TaskList tasks) {
             listed = true;
+            return tasks.toString();
         }
     }
 

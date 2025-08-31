@@ -8,8 +8,10 @@ class StubUi extends lux.ui.Ui {
     private boolean byeShown = false;
 
     @Override
-    public void showBye() {
+    public String showBye() {
         byeShown = true;
+        String message = "Goodbye! Hope to see you again soon!";
+        return message;
     }
 
     public boolean getByeShown() {

@@ -1,11 +1,14 @@
 package lux.ui;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import lux.Lux;
 
 /**
@@ -46,9 +49,17 @@ public class MainWindow {
         String input = userInput.getText();
         String response = lux.getResponse(input);
         dialogContainer.getChildren().addAll(
-            DialogBox.getUserDialog(input, userImage),
-            DialogBox.getLuxDialog(response, luxImage)
-        );
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getLuxDialog(response, luxImage));
         userInput.clear();
+
+        if (lux.isExit()) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished(event -> {
+                Stage stage = (Stage) userInput.getScene().getWindow();
+                stage.close();
+            });
+            delay.play();
+        }
     }
 }

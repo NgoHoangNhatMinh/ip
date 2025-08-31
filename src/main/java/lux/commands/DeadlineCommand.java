@@ -23,7 +23,7 @@ public class DeadlineCommand extends Command {
      * Parse command's argument into description and time based on "/by" keyword
      * Add deadline task to the list of tasks
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
         String[] parts = arguments.split(" /by ", 2);
         if (parts.length < 2) {
             throw new LuxException("Please follow this format: deadline {description} /by {HHmm dd-MM-yyyy}");
@@ -34,12 +34,11 @@ public class DeadlineCommand extends Command {
             LocalDateTime by = LocalDateTime.parse(parts[1].trim(), ui.getTimeFormatter());
             DeadlineTask task = new DeadlineTask(description, by);
             tasks.addTasks(task);
-            ui.addDeadline(task);
+            return ui.addDeadline(task);
         } catch (DateTimeParseException e) {
             throw new LuxException(
                     "Error: Invalid date/time format. Please follow this format: {HHmm dd-MM-yyyy}");
         }
-
     }
 
     public boolean isExit() {
