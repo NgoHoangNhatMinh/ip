@@ -78,6 +78,14 @@ public class Lux {
     }
 
     /**
+     * Say welcome
+     * @return
+     */
+    public String showWelcome() {
+        return ui.showWelcome();
+    }
+
+    /**
      * Return the exit status of Lux
      *
      * @return

@@ -37,6 +37,7 @@ public class MainWindow {
     /** Injects the Lux instance */
     public void setLux(Lux l) {
         lux = l;
+        dialogContainer.getChildren().addAll(DialogBox.getLuxDialog(lux.showWelcome(), luxImage));
     }
 
     /**
