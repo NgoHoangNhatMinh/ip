@@ -45,7 +45,7 @@ public class TaskList implements Serializable {
         if (tasks.isEmpty()) {
             return "  (No tasks yet!)";
         }
-        
+
         String outString = "";
         for (int i = 0; i < tasks.size(); i++) {
             String item = String.format("  %d. %s\n", i, tasks.get(i));
