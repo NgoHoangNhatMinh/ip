@@ -28,6 +28,7 @@ public class Parser {
         String[] parts = fullCommand.trim().split("\\s+", 2);
         String commandWord = parts[0];
         String arguments = parts.length > 1 ? parts[1] : "";
+
         switch (commandWord) {
         case "list":
             return new ListCommand();

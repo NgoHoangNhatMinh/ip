@@ -30,6 +30,7 @@ public class EventCommand extends Command {
             throw new LuxException(
                     "Please follow this format: todo {description} /from {HHmm dd-MM-yyyy} /to {HHmm dd-MM-yyyy}");
         }
+
         String description = fromSplit[0].trim();
         String[] toSplit = fromSplit[1].split(" /to ", 2);
         if (toSplit.length < 2) {
@@ -41,6 +42,7 @@ public class EventCommand extends Command {
             LocalDateTime from = LocalDateTime.parse(toSplit[0].trim(), ui.getTimeFormatter());
             LocalDateTime to = LocalDateTime.parse(toSplit[1].trim(), ui.getTimeFormatter());
             EventTask task = new EventTask(description, from, to);
+
             tasks.addTasks(task);
             return ui.addEvent(task);
         } catch (DateTimeParseException e) {

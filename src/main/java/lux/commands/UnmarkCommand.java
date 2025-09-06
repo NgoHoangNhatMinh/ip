@@ -24,6 +24,7 @@ public class UnmarkCommand extends Command {
             if (idx < 0 || idx >= tasks.getTasks().size()) {
                 throw new LuxException("Please specify the task number you want to unmark.");
             }
+
             tasks.getTasks().get(idx).unmark();
             return ui.unmarkTask(tasks.getTasks().get(idx));
         } catch (NumberFormatException e) {
