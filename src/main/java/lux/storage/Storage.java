@@ -49,7 +49,7 @@ public class Storage {
      *
      * @param tasks
      */
-    public void save(TaskList tasks) {
+    public void save(TaskList tasks) throws LuxException {
         File f = new File(filePath);
         f.getParentFile().mkdirs();
 
@@ -58,6 +58,7 @@ public class Storage {
             out.writeObject(tasks.getTasks());
         } catch (IOException i) {
             i.printStackTrace();
+            throw new LuxException("Exception while saving data to disk");
         }
     }
 }
