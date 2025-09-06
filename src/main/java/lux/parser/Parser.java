@@ -32,20 +32,27 @@ public class Parser {
         case "list":
             return new ListCommand();
         case "todo":
+            assert !arguments.isEmpty();
             return new TodoCommand(arguments);
         case "deadline":
+            assert !arguments.isEmpty();
             return new DeadlineCommand(arguments);
         case "event":
+            assert !arguments.isEmpty();
             return new EventCommand(arguments);
         case "mark":
+            assert !arguments.isEmpty();
             return new MarkCommand(arguments);
         case "unmark":
+            assert !arguments.isEmpty();
             return new UnmarkCommand(arguments);
         case "delete":
+            assert !arguments.isEmpty();
             return new DeleteCommand(arguments);
         case "bye":
             return new ByeCommand();
         case "find":
+            assert !arguments.isEmpty();
             return new FindCommand(arguments);
         default:
             throw new LuxException("Unknown command: " + commandWord);
