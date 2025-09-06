@@ -43,7 +43,7 @@ public class Ui {
      * @param task
      */
     public String addTodo(Task task) {
-        String message = "Added a new deadline task:\n    " + task;
+        String message = "Added a new todo task:\n    " + task;
         return message;
     }
 
@@ -144,5 +144,9 @@ public class Ui {
      */
     public DateTimeFormatter getTimeFormatter() {
         return DateTimeFormatter.ofPattern("HHmm dd-MM-yyyy");
+    }
+
+    public String addAlias(String alias, String command) {
+        return "Aliasing: " + alias + " ==> " + command;
     }
 }

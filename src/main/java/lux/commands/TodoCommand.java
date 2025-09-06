@@ -1,5 +1,6 @@
 package lux.commands;
 
+import lux.data.AliasList;
 import lux.data.TaskList;
 import lux.data.TodoTask;
 import lux.storage.Storage;
@@ -18,7 +19,7 @@ public class TodoCommand extends Command {
     /**
      * Add todo task to list of tasks
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage, AliasList aliases) {
         TodoTask task = new TodoTask(argument);
         tasks.addTasks(task);
         return ui.addTodo(task);

@@ -3,6 +3,7 @@ package lux.commands;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+import lux.data.AliasList;
 import lux.data.EventTask;
 import lux.data.TaskList;
 import lux.exception.LuxException;
@@ -24,7 +25,7 @@ public class EventCommand extends Command {
      * "/from" and "/to" keyword
      * Add event task to the list of tasks
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
+    public String execute(TaskList tasks, Ui ui, Storage storage, AliasList aliases) throws LuxException {
         String[] fromSplit = arguments.split(" /from ", 2);
         if (fromSplit.length < 2) {
             throw new LuxException(

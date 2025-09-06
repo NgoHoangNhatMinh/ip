@@ -1,6 +1,7 @@
 package lux;
 
 import lux.commands.Command;
+import lux.data.AliasList;
 import lux.data.TaskList;
 import lux.exception.LuxException;
 import lux.parser.Parser;
@@ -11,10 +12,11 @@ import lux.ui.Ui;
  * The main class for the Lux chatbot
  */
 public class Lux {
-    private static final String DEFAULT_FILE_PATH = "data/tasks.ser";
+    private static final String DEFAULT_FILE_PATH = "data/";
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    private AliasList aliases;
     private boolean isExit;
 
     public Lux() {
@@ -31,10 +33,12 @@ public class Lux {
         storage = new Storage(filePath);
         isExit = false;
         try {
-            tasks = new TaskList(storage.load());
+            tasks = new TaskList(storage.loadTasks());
+            aliases = storage.loadAliases();
         } catch (LuxException e) {
             ui.showLoadingError();
             tasks = new TaskList();
+            aliases = new AliasList();
         }
     }
 
@@ -47,8 +51,8 @@ public class Lux {
             try {
                 String fullCommand = ui.readCommand();
                 System.out.println(ui.showLine());
-                Command c = Parser.parse(fullCommand);
-                System.out.println(c.execute(tasks, ui, storage));
+                Command c = Parser.parse(fullCommand, aliases);
+                System.out.println(c.execute(tasks, ui, storage, aliases));
                 isExit = c.isExit();
             } catch (LuxException e) {
                 System.err.println(e.getMessage());
@@ -63,8 +67,8 @@ public class Lux {
      */
     public String getResponse(String input) {
         try {
-            Command c = Parser.parse(input);
-            String message = c.execute(tasks, ui, storage);
+            Command c = Parser.parse(input, aliases);
+            String message = c.execute(tasks, ui, storage, aliases);
             System.out.println(ui.showLine());
             System.out.println(message);
             isExit = c.isExit();
