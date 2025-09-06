@@ -33,7 +33,7 @@ public class DeadlineCommand extends Command {
         try {
             LocalDateTime by = LocalDateTime.parse(parts[1].trim(), ui.getTimeFormatter());
             DeadlineTask task = new DeadlineTask(description, by);
-            
+
             tasks.addTasks(task);
             return ui.addDeadline(task);
         } catch (DateTimeParseException e) {
