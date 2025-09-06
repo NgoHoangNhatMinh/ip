@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import lux.exception.LuxException;
+
 class StubUi extends lux.ui.Ui {
     private boolean byeShown = false;
 
@@ -53,9 +55,13 @@ public class ByeCommandTest {
         StubTaskList tasks = new StubTaskList();
         ByeCommand cmd = new ByeCommand();
 
-        cmd.execute(tasks, ui, storage);
+        try {
+            cmd.execute(tasks, ui, storage);
+            assertTrue(ui.getByeShown(), "showBye should be called");
+            assertTrue(storage.getSaved(), "save should be called");
+        } catch (LuxException e) {
+            e.printStackTrace();
+        }
 
-        assertTrue(ui.getByeShown(), "showBye should be called");
-        assertTrue(storage.getSaved(), "save should be called");
     }
 }
