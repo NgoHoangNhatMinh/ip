@@ -1,5 +1,6 @@
 package lux.commands;
 
+import lux.data.AliasList;
 import lux.data.TaskList;
 import lux.storage.Storage;
 import lux.ui.Ui;
@@ -14,7 +15,7 @@ public class FindCommand extends Command {
         this.arguments = arguments;
     }
 
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage, AliasList aliases) {
         return ui.findTasks(tasks.find(arguments));
     }
 

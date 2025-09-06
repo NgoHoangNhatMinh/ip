@@ -3,6 +3,7 @@ package lux.commands;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+import lux.data.AliasList;
 import lux.data.DeadlineTask;
 import lux.data.TaskList;
 import lux.exception.LuxException;
@@ -23,7 +24,7 @@ public class DeadlineCommand extends Command {
      * Parse command's argument into description and time based on "/by" keyword
      * Add deadline task to the list of tasks
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
+    public String execute(TaskList tasks, Ui ui, Storage storage, AliasList aliases) throws LuxException {
         String[] parts = arguments.split(" /by ", 2);
         if (parts.length < 2) {
             throw new LuxException("Please follow this format: deadline {description} /by {HHmm dd-MM-yyyy}");

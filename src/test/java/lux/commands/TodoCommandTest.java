@@ -45,7 +45,7 @@ public class TodoCommandTest {
         StubUi ui = new StubUi();
         StubTaskList tasks = new StubTaskList();
         StubStorage storage = new StubStorage();
-        cmd.execute(tasks, ui, storage);
+        cmd.execute(tasks, ui, storage, null);
         assertTrue(tasks.added);
         assertTrue(ui.todoAdded);
     }

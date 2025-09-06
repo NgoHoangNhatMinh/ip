@@ -1,5 +1,6 @@
 package lux.parser;
 
+import lux.commands.AliasCommand;
 import lux.commands.ByeCommand;
 import lux.commands.Command;
 import lux.commands.DeadlineCommand;
@@ -10,6 +11,7 @@ import lux.commands.ListCommand;
 import lux.commands.MarkCommand;
 import lux.commands.TodoCommand;
 import lux.commands.UnmarkCommand;
+import lux.data.AliasList;
 import lux.exception.LuxException;
 
 /**
@@ -24,12 +26,14 @@ public class Parser {
      * @return specific command based on the first word of user's input
      * @throws LuxException
      */
-    public static Command parse(String fullCommand) throws LuxException {
+    public static Command parse(String fullCommand, AliasList aliases) throws LuxException {
         String[] parts = fullCommand.trim().split("\\s+", 2);
-        String commandWord = parts[0];
+        String commandWord = aliases.process(parts[0]);
         String arguments = parts.length > 1 ? parts[1] : "";
 
         switch (commandWord) {
+        case "alias":
+            return new AliasCommand(arguments);
         case "list":
             return new ListCommand();
         case "todo":

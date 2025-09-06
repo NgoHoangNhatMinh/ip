@@ -29,7 +29,7 @@ class StubStorage extends lux.storage.Storage {
     }
 
     @Override
-    public void save(lux.data.TaskList tasks) {
+    public void saveTasks(lux.data.TaskList tasks) {
         saved = true;
     }
 
@@ -56,7 +56,7 @@ public class ByeCommandTest {
         ByeCommand cmd = new ByeCommand();
 
         try {
-            cmd.execute(tasks, ui, storage);
+            cmd.execute(tasks, ui, storage, null);
             assertTrue(ui.getByeShown(), "showBye should be called");
             assertTrue(storage.getSaved(), "save should be called");
         } catch (LuxException e) {

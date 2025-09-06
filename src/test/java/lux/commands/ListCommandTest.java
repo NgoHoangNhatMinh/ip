@@ -31,7 +31,7 @@ public class ListCommandTest {
         StubUi ui = new StubUi();
         StubTaskList tasks = new StubTaskList();
         StubStorage storage = new StubStorage();
-        cmd.execute(tasks, ui, storage);
+        cmd.execute(tasks, ui, storage, null);
         assertTrue(ui.listed);
     }
 

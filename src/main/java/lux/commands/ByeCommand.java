@@ -1,5 +1,6 @@
 package lux.commands;
 
+import lux.data.AliasList;
 import lux.data.TaskList;
 import lux.exception.LuxException;
 import lux.storage.Storage;
@@ -12,9 +13,10 @@ public class ByeCommand extends Command {
     /**
      * show bye message and save tasks to storage
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws LuxException {
+    public String execute(TaskList tasks, Ui ui, Storage storage, AliasList aliases) throws LuxException {
         try {
-            storage.save(tasks);
+            storage.saveTasks(tasks);
+            storage.saveAliases(aliases);
             return ui.showBye();
         } catch (LuxException e) {
             throw e;
