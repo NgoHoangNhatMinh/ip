@@ -25,7 +25,7 @@ class StubStorage extends lux.storage.Storage {
     private boolean saved = false;
 
     StubStorage() {
-        super("dummy");
+        super("dummy/");
     }
 
     @Override
