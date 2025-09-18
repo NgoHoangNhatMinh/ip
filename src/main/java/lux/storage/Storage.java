@@ -17,7 +17,6 @@ import lux.exception.LuxException;
  * The storage class manages saving and loading data
  */
 public class Storage {
-    private String filePath;
     private String taskPath;
     private String aliasPath;
 
@@ -26,7 +25,6 @@ public class Storage {
      * @param filePath
      */
     public Storage(String filePath) {
-        this.filePath = filePath;
         this.taskPath = filePath + "tasks.ser";
         this.aliasPath = filePath + "aliases.ser";
     }
